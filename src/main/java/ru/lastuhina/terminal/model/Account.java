@@ -1,15 +1,13 @@
 package ru.lastuhina.terminal.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -19,9 +17,11 @@ import java.util.Date;
 public class Account {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(unique = true)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String cardNumber;
 
     private BigDecimal balance;
@@ -32,5 +32,5 @@ public class Account {
 
     private Integer failedAttempt;
 
-    private Date lockTime;
+    private LocalDateTime lockTime;
 }

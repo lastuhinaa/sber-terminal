@@ -1,4 +1,4 @@
-package ru.lastuhina.terminal.filter;
+package ru.lastuhina.terminal.security.filter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ConfigurerFilter extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    private final PinFilter pinFilter;
+    private final HeaderUsernamePasswordAuthenticationFilter headerUsernamePasswordAuthenticationFilter;
 
     @Override
     public void configure(HttpSecurity builder) {
-        builder.addFilterBefore(pinFilter, UsernamePasswordAuthenticationFilter.class);
+        builder.addFilterBefore(headerUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

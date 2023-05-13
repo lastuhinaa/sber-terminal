@@ -1,8 +1,9 @@
-package ru.lastuhina.terminal.model;
+package ru.lastuhina.terminal.security.userdetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,9 +12,12 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class UserDetailsImpl implements UserDetails {
 
-    private Account account;
+    private String username;
+    private String password;
+    private Boolean isLocked;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -24,12 +28,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return account.getPin();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return account.getCardNumber();
+        return username;
     }
 
     @Override
@@ -39,7 +43,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !account.getIsLocked();
+        return true;
     }
 
     @Override
@@ -52,7 +56,4 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
-    public Account getAccount() {
-        return account;
-    }
 }
