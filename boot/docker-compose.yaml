@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    networks:
+      - app-net
+    ports:
+      - "5434:5432"
+
+  liquibase:
+    image: liquibase/liquibase:4.17.2
+    networks:
+      - app-net
+    command: liquibase --driver=org.postgresql.Driver --url=jdbc:postgresql://database:5432/postgres --password=postgres --username=postgres --changelog-file=/boot/db.changelog-master.xml update
+    volumes:
+      - ./liquibase/changelog:/liquibase/boot/changelog
+      - ./liquibase/changelog/db.changelog-master.xml:/liquibase/boot/db.changelog-master.xml
+      - ./liquibase/changelog/init-db-1.0.0.xml:/liquibase/boot/init-db-1.0.0.xml
+    depends_on:
+      database:
+        condition: service_started
+
+  terminal:
+    image: alastuhina20/terminal:0.0.4
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
+      POSTGRES_URL: jdbc:postgresql://database:5432/postgres
+    networks:
+      - app-net
+    ports:
+      - "7653:7652"
+    depends_on:
+      database:
+        condition: service_started
+      liquibase:
+        condition: service_completed_successfully
+
+networks:
+  app-net:
+    name: terminal-net
+    driver: bridge

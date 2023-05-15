@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="create-table-account" author="lastuhina">
+        <createTable tableName="account">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="id"/>
+            </column>
+            <column name="balance" type="numeric"/>
+            <column name="card_number" type="varchar"/>
+            <column name="failed_attempt" type="integer"/>
+            <column name="is_locked" type="boolean"/>
+            <column name="lock_time" type="timestamp"/>
+            <column name="pin" type="varchar"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="insert-account" author="lastuhina">
+        <insert tableName="account">
+            <column name="id" value="1"/>
+            <column name="balance" value="312"/>
+            <column name="card_number" value="1"/>
+            <column name="failed_attempt" value="0"/>
+            <column name="is_locked" value="false"/>
+            <column name="lock_time" value="null"/>
+            <column name="pin" value="$2a$12$M7bYOL4mRp4UYxsljBd0MOsVSHq.XHOdxvO.C1ajaSUO54hoLlLEu/K80gB2/q"/>
+        </insert>
+
+        <insert tableName="account">
+            <column name="id" value="2"/>
+            <column name="balance" value="600"/>
+            <column name="card_number" value="2"/>
+            <column name="failed_attempt" value="0"/>
+            <column name="is_locked" value="false"/>
+            <column name="lock_time" value="null"/>
+            <column name="pin" value="$2a$12$jN0lcLrMF4Enpsx9aRIi4uPzZVVciJtURz6660ZSf6Nv/K80gB2/q"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

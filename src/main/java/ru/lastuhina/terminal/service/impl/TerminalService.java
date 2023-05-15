@@ -3,6 +3,7 @@ package ru.lastuhina.terminal.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lastuhina.terminal.exception.AccountNotFoundException;
 import ru.lastuhina.terminal.exception.IncorrectAmountException;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE)
 public class TerminalService implements ru.lastuhina.terminal.service.TerminalService {
 
     private static final BigDecimal MINIMUM_AMOUNT = BigDecimal.valueOf(100);
